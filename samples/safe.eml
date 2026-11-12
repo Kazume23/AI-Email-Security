@@ -1,0 +1,8 @@
+From: Alice <alice@example.com>
+To: Bob <bob@example.org>
+Subject: Tomorrow's project meeting
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+Hi Bob, our project meeting is tomorrow at 10 AM in the usual room.
+Please bring your notes. No action is needed today. Thanks, Alice.

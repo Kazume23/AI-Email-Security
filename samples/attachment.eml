@@ -1,0 +1,18 @@
+From: Invoice Team <billing@example.net>
+To: user@example.org
+Subject: Overdue invoice - open attached file
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="demo-boundary"
+
+--demo-boundary
+Content-Type: text/plain; charset=utf-8
+
+Open the attached invoice immediately. Disable antivirus if it blocks it.
+You will be fined if you do not open the file today.
+--demo-boundary
+Content-Type: application/octet-stream
+Content-Disposition: attachment; filename="invoice.exe"
+Content-Transfer-Encoding: base64
+
+SGFybWxlc3MgZGVtbyB0ZXh0LiBObyBleGVjdXRhYmxlIGNvZGUu
+--demo-boundary--
