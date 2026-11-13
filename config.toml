@@ -1,0 +1,38 @@
+[ollama]
+url = "http://127.0.0.1:11434/api/chat"
+model = "qwen3:4b"
+timeout = 180
+context = 16384
+output_tokens = 1800
+temperature = 0
+
+[limits]
+file_bytes = 5242880
+text_chars = 16000
+response_bytes = 1048576
+
+[paths]
+data = "data"
+models = "models"
+reports = "reports"
+
+[training]
+seed = 42
+max_tokens = 20000
+sequence_length = 512
+embedding_dim = 64
+hidden_units = 32
+batch_size = 64
+epochs = 20
+patience = 3
+learning_rate = 0.001
+cpu_threads = 4
+max_per_class = 4000
+threshold_steps = 201
+
+[dataset]
+record = "https://zenodo.org/records/8339691"
+url = "https://zenodo.org/records/8339691/files/"
+license = "CC-BY-4.0"
+version = "v1"
+files = ["Nazario.csv", "Nigerian_Fraud.csv", "SpamAssasin.csv"]

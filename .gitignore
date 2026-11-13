@@ -11,3 +11,6 @@ reports/
 !samples/*.eml
 *.keras
 *.h5
+models/
+.ruff_cache/
+work/
