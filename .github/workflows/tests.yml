@@ -1,0 +1,15 @@
+name: Python checks
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r requirements-dev.txt
+      - run: ruff check ai_email_security app.py build_corpus.py download_data.py prepare_data.py train_model.py evaluate_model.py
+      - run: ruff format --check ai_email_security app.py build_corpus.py download_data.py prepare_data.py train_model.py evaluate_model.py
+      - run: python -m unittest discover -s tests -v

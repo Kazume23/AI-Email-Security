@@ -29,6 +29,8 @@ learning_rate = 0.001
 cpu_threads = 4
 max_per_class = 4000
 threshold_steps = 201
+grouping_features = 20000
+grouping_similarity = 0.85
 
 [dataset]
 record = "https://zenodo.org/records/8339691"

@@ -1,4 +1,37 @@
-# AI-Email-Security v0.1.0
+# AI-Email-Security v0.2.0
+
+## Nowy silnik TensorFlow/Keras
+
+Uruchom `run_demo.py` w PyCharm i wybierz **TensorFlow / Keras** z listy silników.
+Na komputerze użytym do wdrożenia model jest już wytrenowany w katalogu `models`.
+Po zmianie modelu uruchom aplikację ponownie, aby wyczyścić pamięć podręczną.
+
+Odtworzenie na innym komputerze wymaga instalacji `requirements-ml.txt`, następnie
+uruchomienia w PyCharm kolejno `download_data.py`, `build_corpus.py`,
+`prepare_data.py`, `train_model.py`, `evaluate_model.py`, `evaluate_scenarios.py`.
+Każdy skrypt uruchamia się przez prawy przycisk → Run. Parametry są w `config.toml`.
+Modele i dane są lokalne i ignorowane przez Git. Raporty trafiają do `reports`.
+Pobranie danych wymaga Internetu. Trening odbywa się domyślnie na CPU.
+
+### Wyniki bazowe z 13 listopada 2026
+
+8000 wiadomości; trening 5657, walidacja 1179, test 1164. Progi z walidacji
+wynoszą 0.24551 i 0.36028. Test: 549 poprawnie wykrytych zagrożeń, 3 przeoczenia,
+606 poprawnych ocen legalnych maili, 6 fałszywych alarmów. Precision 98.92%,
+recall 99.46%, F1 99.19%. W tym teście nie wystąpił wynik pośredni.
+
+**Ograniczenie jakości:** na osobnym zestawie 8 syntetycznych scenariuszy model
+ostrzegł przy wszystkich 4 atakach, ale też przy wszystkich 4 legalnych mailach.
+Wysoki wynik wewnątrz korpusu nie przekłada się na potwierdzoną skuteczność
+na nowych wiadomościach. Źródła klas, wiek danych i styl tekstu mogą wpływać na
+wynik. Nie dostrajano modelu do tych ośmiu przykładów po pomiarze.
+
+Architektura: TextVectorization → Embedding → GlobalAveragePooling1D → Dense.
+Słownik jest dopasowany wyłącznie do treningu. Przetwarzane jest pierwsze 512
+tokenów tekstu, zapisane w konfiguracji modelu. Wynik dotyczy tego fragmentu.
+Keras zwraca ocenę i standardowe zalecenie, a reguły dostarczają osobnych sygnałów.
+Pełny opis pochodzenia danych znajduje się w `DATA_SOURCES.md`, a plan dalszych
+wersji w `ROADMAP.md`.
 
 Lokalne demo analizy angielskich wiadomości `.eml`. Python + Streamlit + Ollama
 (`qwen3:4b`). Wynik i wyjaśnienie po polsku. To prototyp do pracy inżynierskiej,
@@ -64,9 +97,8 @@ błędu — nie powinien pojawić się werdykt bezpieczeństwa.
 
 ## Dalsza praca badawcza
 
-TensorFlow/Keras nie są jeszcze częścią v0.1.0. Kolejny etap: osobny klasyfikator
-NLP, oznaczone i rozdzielone dane treningowe/walidacyjne/testowe, porównanie
-z LLM, polskie wiadomości oraz kontrolowane przykłady generowane przez AI.
+TensorFlow/Keras są częścią v0.2.0. Kolejny etap obejmuje porównanie
+z LLM, poprawę uogólniania, polskie wiadomości oraz kontrolowane przykłady generowane przez AI.
 Adaptacja oznacza ponowne trenowanie na zweryfikowanych danych, nie automatyczne
 uczenie z przesyłanych maili. Badane scenariusze: wyłudzenie danych logowania,
 oszustwo płatnicze i nakłanianie do otwarcia załącznika.

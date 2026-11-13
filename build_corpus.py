@@ -46,10 +46,14 @@ def build():
         .reset_index(drop=True)
     )
     templates = combined["text"].map(normalized_template)
-    vectors = TfidfVectorizer(max_features=20000, ngram_range=(1, 2)).fit_transform(
-        templates
-    )
-    neighbors = NearestNeighbors(metric="cosine", radius=0.15, n_jobs=2).fit(vectors)
+    vectors = TfidfVectorizer(
+        max_features=SETTINGS["training"]["grouping_features"], ngram_range=(1, 2)
+    ).fit_transform(templates)
+    neighbors = NearestNeighbors(
+        metric="cosine",
+        radius=1 - SETTINGS["training"]["grouping_similarity"],
+        n_jobs=2,
+    ).fit(vectors)
     graph = neighbors.radius_neighbors_graph(vectors, mode="connectivity")
     _, groups = connected_components(graph, directed=False)
     combined["group"] = groups.astype(str)
@@ -59,7 +63,7 @@ def build():
     audit = {
         "counts": combined.groupby(["source", "label"]).size().to_dict(),
         "groups": int(len(set(groups))),
-        "near_duplicate_cosine_threshold": 0.85,
+        "near_duplicate_cosine_threshold": SETTINGS["training"]["grouping_similarity"],
         "limitation": "Source labels retained. Near-duplicate grouping is heuristic; source and age confounding remain.",
     }
     audit["counts"] = {str(key): int(value) for key, value in audit["counts"].items()}

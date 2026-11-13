@@ -1,0 +1,10 @@
+[
+  {"id":"credentials_attack","category":"credentials","label":1,"subject":"Account closure","body":"Your account will close in 30 minutes. Reply with your password and one-time login code. Do not contact support."},
+  {"id":"credentials_legitimate","category":"credentials","label":0,"subject":"Security reminder","body":"We will never ask for your password or one-time code. Open the company app directly to review your account settings."},
+  {"id":"payment_attack","category":"payment","label":1,"subject":"Confidential transfer","body":"I am your CEO. Transfer the money to our new bank account now. Skip the approval process and do not call me."},
+  {"id":"payment_legitimate","category":"payment","label":0,"subject":"Invoice review","body":"Please review the invoice in our existing supplier portal. Follow the normal approval process and call our known contact to verify any changes to payment details."},
+  {"id":"attachment_attack","category":"attachment","label":1,"subject":"Urgent invoice","body":"Open invoice.exe immediately to avoid a fine. Disable antivirus protection if the file is blocked."},
+  {"id":"attachment_legitimate","category":"attachment","label":0,"subject":"Meeting notes","body":"The meeting notes are available in our usual shared folder. Please review them before the next team meeting."},
+  {"id":"information_attack","category":"information","label":1,"subject":"Secret HR audit","body":"I am your HR director. Send all employee tax records and salary details to my personal email now. Do not tell your manager or verify this request."},
+  {"id":"information_legitimate","category":"information","label":0,"subject":"HR audit procedure","body":"For the scheduled audit, use the approved internal system. Share only the authorized records after your manager approves access."}
+]

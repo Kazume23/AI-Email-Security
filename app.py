@@ -15,6 +15,10 @@ engine = st.selectbox(
         value
     ],
 )
+if engine == "keras":
+    st.info(
+        "Model bazowy v0.2.0. Testy nowych legalnych wiadomości wykazały nadmierną liczbę alarmów. Wynik wymaga weryfikacji użytkownika."
+    )
 st.write("Wybierz wiadomość .eml. Otrzymasz ocenę zagrożeń i wskazówki po polsku.")
 uploaded = st.file_uploader("Wiadomość e-mail (maks. 5 MB)", type=["eml"])
 raw = uploaded.getvalue() if uploaded else None

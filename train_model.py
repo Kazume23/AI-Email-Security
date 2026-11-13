@@ -125,4 +125,8 @@ def train():
 
 
 if __name__ == "__main__":
+    import sys
+
+    if not sys.flags.utf8_mode:
+        raise SystemExit(subprocess.call([sys.executable, "-X", "utf8", __file__]))
     train()

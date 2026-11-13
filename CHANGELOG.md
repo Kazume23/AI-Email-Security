@@ -1,5 +1,13 @@
 # Historia zmian
 
+## 0.2.0 — 2026-11-13
+
+- Wytrenowany lokalny model TensorFlow 2.20 / Keras 3.11 i wybór silnika.
+- Przygotowanie rzeczywistych danych, grupowany podział i progi z walidacji.
+- Metadane modelu, kontrola integralności, raport testowy oraz scenariuszowy.
+- Wspólna konfiguracja, CI i testy regresji. Dane użytkownika zachowane.
+- Model bazowy nadmiernie alarmuje na nowych legalnych przykładach; opis w README.
+
 ## 0.1.0 — 2026-11-12
 
 - Lokalny interfejs Streamlit, wybór EML i pobieranie raportu JSON.
