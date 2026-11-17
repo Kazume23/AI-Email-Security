@@ -6,6 +6,15 @@ context = 16384
 output_tokens = 1800
 temperature = 0
 
+[diagnostics]
+enabled = true
+save_logs = true
+text_influence_enabled = true
+max_fragments = 30
+batch_size = 16
+log_max_bytes = 1048576
+log_backups = 3
+
 [limits]
 file_bytes = 5242880
 text_chars = 16000

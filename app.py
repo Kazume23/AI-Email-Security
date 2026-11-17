@@ -4,6 +4,7 @@ import streamlit as st
 from ai_email_security.analyzer import analyze
 from ai_email_security.eml_reader import InputError
 from ai_email_security.ollama_client import AnalysisError
+from ai_email_security.config import SETTINGS
 
 st.set_page_config(page_title="AI Email Security", page_icon="✉️")
 st.title("AI Email Security")
@@ -70,7 +71,36 @@ if report:
         file_name="email-report.json",
         mime="application/json",
     )
+    if engine == 'keras' and 'diagnostics' in report:
+        with st.expander('Diagnostyka modelu Keras'):
+            diagnostics = report['diagnostics']
+            st.write('Model:', diagnostics.get('model_id', report.get('model')))
+            st.write('Architektura:', diagnostics.get('architecture', 'niedostępna'))
+            st.caption('Wynik sieci nie jest skalibrowanym prawdopodobieństwem phishingu.')
+            st.json(diagnostics)
+            st.write('Sygnały reguł (nie zmieniają wyniku sieci):')
+            for signal in report['rule_signals']:
+                st.text(signal)
+            if diagnostics.get('tokens_omitted', 0):
+                st.warning('Model nie przetworzył całego tekstu: część tokenów została przycięta.')
+            if st.button('Zbadaj wpływ fragmentów', disabled=not raw or not SETTINGS.get('diagnostics', {}).get('text_influence_enabled', True)):
+                from ai_email_security.keras_diagnostics import influence
+                from ai_email_security.eml_reader import read_eml
+
+                try:
+                    with st.spinner('Sprawdzanie wariantów wiadomości…'):
+                        report['text_influence'] = influence(read_eml(raw), report['model'], report['score'])
+                except (AnalysisError, InputError, ValueError, RuntimeError) as exc:
+                    st.error('Diagnostyka fragmentów nie została ukończona. ' + str(exc))
+            if 'text_influence' in report:
+                sensitivity = report['text_influence']
+                st.caption(sensitivity['limitations'])
+                st.dataframe(sensitivity['fragments'], hide_index=True)
+                st.write('Liczba zbadanych wariantów:', sensitivity['variants_evaluated'])
+                st.write('Pominięte fragmenty:', sensitivity['fragments_skipped'])
+            st.caption('Raport może zawierać fragmenty wiadomości. Pobierasz go świadomie na swój komputer.')
+            st.download_button('Pobierz diagnostykę JSON', json.dumps({'diagnostics': diagnostics, 'rule_signals': report['rule_signals'], 'text_influence': report.get('text_influence')}, ensure_ascii=False, indent=2), file_name='keras-diagnostics.json', mime='application/json')
 st.caption(
-    "Analiza odbywa się lokalnie na komputerze. Brak historii na dysku. "
+    "Analiza odbywa się lokalnie na komputerze. Diagnostyka Keras może zapisywać lokalne logi techniczne bez treści wiadomości. "
     "Linki i załączniki nie są otwierane. Instrukcje zawarte w mailu mogą próbować manipulować modelem; odporność nie jest gwarantowana."
 )
