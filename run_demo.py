@@ -9,6 +9,6 @@ if __name__ == '__main__':
         print('Brak Streamlit. W PyCharm otwórz requirements.txt i wybierz Install requirements.')
         sys.exit(1)
     app = Path(__file__).resolve().with_name('app.py')
-    raise SystemExit(subprocess.call([sys.executable, '-m', 'streamlit', 'run', str(app),
+    raise SystemExit(subprocess.call([sys.executable, '-X', 'utf8', '-m', 'streamlit', 'run', str(app),
                                      '--server.address=127.0.0.1', '--server.port=8501',
                                      '--server.maxUploadSize=5', '--browser.gatherUsageStats=false']))
