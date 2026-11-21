@@ -32,6 +32,10 @@ class AnalysisError(RuntimeError):
     pass
 
 
+class EngineUnavailable(AnalysisError):
+    pass
+
+
 def validate(result):
     if not isinstance(result, dict) or set(result) != set(SCHEMA["required"]):
         raise AnalysisError("Model zwrócił nieprawidłowy format raportu.")
@@ -101,7 +105,7 @@ def analyze_with_model(mail, signals):
         return validate(json.loads(envelope["message"]["content"]))
     except error.HTTPError as exc:
         if exc.code == 404:
-            raise AnalysisError(
+            raise EngineUnavailable(
                 "Brak modelu qwen3:4b. Pobierz go w aplikacji Ollama."
             ) from exc
         raise AnalysisError(
@@ -110,7 +114,9 @@ def analyze_with_model(mail, signals):
     except (TimeoutError, socket.timeout) as exc:
         raise AnalysisError("Przekroczono czas analizy (180 sekund).") from exc
     except error.URLError as exc:
-        raise AnalysisError(
+        if isinstance(exc.reason, (TimeoutError, socket.timeout)):
+            raise AnalysisError("Przekroczono czas analizy.") from exc
+        raise EngineUnavailable(
             "Nie można połączyć się z lokalną Ollamą. Uruchom aplikację Ollama."
         ) from exc
     except (ValueError, KeyError, TypeError, AttributeError) as exc:
