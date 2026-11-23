@@ -1,5 +1,3 @@
-"""Select phishing sources and ham only, then group near-duplicate templates."""
-
 import json
 import re
 import pandas as pd
@@ -38,7 +36,6 @@ def build():
     combined = combined[
         ~combined["normalized"].isin(conflicts[conflicts > 1].index)
     ].drop_duplicates("normalized")
-    # Deterministic class cap keeps CPU training practical.
     combined = combined.sample(frac=1, random_state=SETTINGS["training"]["seed"])
     combined = (
         combined.groupby("label")

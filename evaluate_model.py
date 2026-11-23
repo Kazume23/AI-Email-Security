@@ -1,5 +1,3 @@
-"""Evaluate the frozen test set once. Never chooses thresholds."""
-
 import hashlib
 import json
 import pandas as pd

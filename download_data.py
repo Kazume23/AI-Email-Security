@@ -1,5 +1,3 @@
-"""Download versioned public research files; never open email links."""
-
 import hashlib
 import json
 import urllib.request

@@ -1,5 +1,3 @@
-"""Identical text preparation at training and inference."""
-
 import re
 import unicodedata
 

@@ -93,7 +93,6 @@ class ModelTests(unittest.TestCase):
         payload = json.loads(req.data)
         self.assertNotIn("SYSTEM OVERRIDE", payload["messages"][0]["content"])
         self.assertIn("SYSTEM OVERRIDE", payload["messages"][1]["content"])
-        # This verifies instruction separation, not real-model resistance.
         for raw in (b"bad json", b"{}", json.dumps({"done": False}).encode()):
             response.read.return_value = raw
             with self.assertRaises(AnalysisError):

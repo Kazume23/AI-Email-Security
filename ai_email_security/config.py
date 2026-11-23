@@ -1,5 +1,3 @@
-"""Configuration shared by inference and training (Python 3.11+)."""
-
 import os
 import tomllib
 from pathlib import Path

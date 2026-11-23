@@ -1,5 +1,3 @@
-"""Small synthetic diagnostic suite, separate from corpus metrics."""
-
 import json
 from email.message import EmailMessage
 from ai_email_security.analyzer import analyze

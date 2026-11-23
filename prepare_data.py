@@ -1,5 +1,3 @@
-"""Prepare reviewed CSV (subject, body, label, group) into fixed splits."""
-
 import hashlib
 import json
 import pandas as pd
@@ -31,7 +29,6 @@ def prepare():
     frame = frame[
         ~frame["digest"].isin(conflicts[conflicts > 1].index)
     ].drop_duplicates("digest")
-    # Source groups must identify campaign/template variants before splitting.
     frame["group"] = frame["group"].astype(str)
     if (frame["group"].str.len() == 0).any():
         raise ValueError("Every record requires a campaign/template group.")

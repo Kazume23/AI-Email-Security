@@ -1,5 +1,3 @@
-"""Binary warning metrics and validation-only threshold selection."""
-
 import numpy as np
 from sklearn.metrics import confusion_matrix, precision_recall_fscore_support
 
@@ -30,7 +28,6 @@ def choose_thresholds(labels, scores, steps):
     f2 = 5 * tp / np.maximum(5 * tp + 4 * fn + fp, 1)
     f1 = 2 * tp / np.maximum(2 * tp + fn + fp, 1)
     low_index = int(np.argmax(f2))
-    # Distinct thresholds preserve the middle warning band.
     low_index = min(low_index, len(candidates) - 2)
     high_index = low_index + 1 + int(np.argmax(f1[low_index + 1 :]))
     return {"low": float(candidates[low_index]), "high": float(candidates[high_index])}

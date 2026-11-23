@@ -92,7 +92,6 @@ def analyze_with_model(mail, signals):
         headers={"Content-Type": "application/json"},
     )
     try:
-        # Bypass system proxies: email data must go only to local Ollama.
         with request.build_opener(request.ProxyHandler({})).open(
             req, timeout=SETTINGS["ollama"]["timeout"]
         ) as response:

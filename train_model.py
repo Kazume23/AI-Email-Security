@@ -1,5 +1,3 @@
-"""Run in PyCharm after prepare_data.py. Uses training and validation only."""
-
 import os
 
 os.environ.setdefault("CUDA_VISIBLE_DEVICES", "-1")

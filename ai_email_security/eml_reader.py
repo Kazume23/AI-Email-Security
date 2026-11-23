@@ -1,5 +1,3 @@
-"""Offline MIME parsing. Never executes attachments or fetches URLs."""
-
 import re
 from email import policy
 from email.parser import BytesParser

@@ -1,5 +1,3 @@
-"""Load one immutable model bundle once per process."""
-
 import hashlib
 import json
 import math

@@ -10,6 +10,6 @@ jobs:
           python-version: '3.11'
           cache: pip
       - run: pip install -r requirements-dev.txt
-      - run: ruff check ai_email_security app.py build_corpus.py download_data.py prepare_data.py train_model.py evaluate_model.py
-      - run: ruff format --check ai_email_security app.py build_corpus.py download_data.py prepare_data.py train_model.py evaluate_model.py
+      - run: ruff check ai_email_security app.py build_corpus.py download_data.py prepare_data.py train_model.py evaluate_model.py compare_models.py
+      - run: ruff format --check ai_email_security app.py build_corpus.py download_data.py prepare_data.py train_model.py evaluate_model.py compare_models.py
       - run: python -m unittest discover -s tests -v
